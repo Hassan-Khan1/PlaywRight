@@ -45,7 +45,7 @@ def main():
         quotes = page.query_selector_all('[class="quote"]')
         print(quotes)
         for quote in quotes:
-            print(quote)
+            # print(quote)
             print(quote.query_selector('.text').inner_text())
 
         
