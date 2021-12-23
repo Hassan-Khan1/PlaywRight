@@ -4,18 +4,27 @@ def main(url):
 
   with sync_playwright() as p:
 
-    browser = p.chromium .launch(headless=False)
+    browser = p.chromium .launch(headless=True)
     page = browser.new_page()
     page.goto(url)
     blog = page.query_selector_all('.col-md-9')
+
+
+
   
     for quote in blog:
-      
       Title = quote.query_selector('.text-dark').inner_text()
-      Description = quote.query_selector('.excerpt').inner_text()
       print('Title : ', Title )
+
+      hrefs_of_page = quote.eval_on_selector_all(".text-dark", "elements => elements.map(element => element.href)")
+      # hrefs_of_page = quote.eval_on_selector_all("a[href]", "elements => elements.map(element => element.href)")
+      print("Link : ",hrefs_of_page)
+
+      Description = quote.query_selector('.excerpt').inner_text()
       print('Description : ',Description)
 
+
+      
 if __name__ == '__main__':
     main('https://www.techjuice.pk/')
 
