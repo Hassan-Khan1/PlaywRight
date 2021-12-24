@@ -12,7 +12,7 @@ def main(url):
     #     writer = csv.writer(outcsv)
     #     writer.writerow(['Title', 'URL', 'Description'])
 
-    browser = p.chromium .launch(headless=False)
+    browser = p.chromium .launch(headless=True)
     page = browser.new_page()
     page.goto(url)
     # blog = page.  query_selector_all('.site-content > .row > div:first-child .col-md-9')
@@ -22,15 +22,18 @@ def main(url):
     # blog_title11 =  page.query_selector('xpath= //html/body/div/div/div/div/div/div/p')  
     # print(blog_title11.inner_html())
 
-    Article_Heading =  page.query_selector('xpath= //html/body/div/div/div/div/div/div/h1')  
-    print(Article_Heading.inner_html())
+    # Article_Heading =  page.query_selector('xpath= //html/body/div/div/div/div/div/div/h1')  
+    # print(Article_Heading.inner_html())
 
-    written_by =  page.query_selector('xpath= //html/body/div/div/div/div/div/div/div/small/a/span')  
-    print(written_by.inner_html())
+    # written_by =  page.query_selector('xpath= //html/body/div/div/div/div/div/div/div/small/a/span')  
+    # print(written_by.inner_html())
+
+    Article_des =  page.query_selector('xpath= //html/body/div/div/div[2]/div/div/div/article/p/span')  
+    print(Article_des.inner_html())
 
 # /html/body/div[1]/div[1]/div[1]/div/div/div[1]/h1
     # page.goto(url)
-
+# /html/body/div[1]/div[1]/div[2]/div/div/div[1]/article/p[1]
     # blog = page.query_selector_all('site-content')
     # blog = page.query_selector_all('.col-md-9')
     # print(blog)

@@ -7,7 +7,7 @@ def main(url):
   with sync_playwright() as p:
     with open('Tech-Juice-xpath.csv', 'w', newline='') as outcsv:
         writer = csv.writer(outcsv)
-        writer.writerow(['Title', 'URL', 'Description','Written-by','Article-Heading'])
+        writer.writerow(['Title', 'URL', 'Description','Written-by','Article-Heading','Article_Description'])
     browser = p.chromium .launch(headless=False)
     page = browser.new_page()
     page.goto(url)
@@ -18,7 +18,6 @@ def main(url):
     article_url = []
 
     for quote in Homepage:
-     
       try:
         Title = quote.query_selector('xpath=div/h2/a').inner_text()
         print('Title : ', Title )
@@ -41,7 +40,6 @@ def main(url):
             writer.writerow([Title,string_format_href,Description])
 
         print("\n")
-
       except:
         Title = "Not Found"
         print('Title : ', Title )
@@ -49,22 +47,24 @@ def main(url):
         print('hrefs_of_page : ', hrefs_of_page )
       
     print('Article_url : ',article_url)
-
-    page.wait_for_timeout((5000))
+    page.wait_for_timeout((2000))
 
     for i in article_url:
       Article_page = browser.new_page()
       Article_page.goto(i)
-
+      page.wait_for_timeout((3000))
       Article_Heading =  Article_page.query_selector('xpath= //html/body/div/div/div/div/div/div/h1').inner_html()
       print('Article_Heading : ',Article_Heading)
 
       written_by =  Article_page.query_selector('xpath= //html/body/div/div/div/div/div/div/div/small/a/span').inner_html()  
       print("Written By --",written_by)
 
-      with open('Tech-Juice-xpath.csv', 'a', newline='') as outcsv:
-            writer = csv.writer(outcsv)
-            writer.writerow(["","","",written_by,Article_Heading])
+      # Article_Des =  Article_page.query_selector('xpath= //html/body/div/div/div[2]/div/div/div/article/p/span').inner_html()  
+      # print('Article_Description : ',Article_Des)
+
+      # with open('Tech-Juice-xpath.csv', 'a', newline='') as outcsv:
+      #       writer = csv.writer(outcsv)
+      #       writer.writerow(["","","",written_by,Article_Heading,Article_Des])
       
       Article_page.close()
 
